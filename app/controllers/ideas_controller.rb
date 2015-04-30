@@ -63,6 +63,10 @@ class IdeasController < ApplicationController
   # DELETE /ideas/1
   # DELETE /ideas/1.json
   def destroy
+    unless current_user.id == @idea.user_id
+      # not authorized
+      raise "go away hacker"
+    end
     @idea.destroy
     respond_to do |format|
       format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
